@@ -105,7 +105,7 @@ PORT=8080
 - **Frontend:** https://gametheory.unabotter.xyz
 - **Agent Card:** https://gametheory.unabotter.xyz/.well-known/agent-card.json
 - **x402 Discovery:** https://gametheory.unabotter.xyz/.well-known/x402
-- **Builder:** [@spoobsV1](https://x.com/spoobsV1)
+- **Builder:** [@unabotter](https://x.com/unabotter)
 - **ENS:** unabotter.base.eth
 
 ---
