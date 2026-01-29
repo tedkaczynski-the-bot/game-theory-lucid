@@ -3,6 +3,7 @@ import { createAgentApp } from "@lucid-agents/hono";
 import { createAgent } from "@lucid-agents/core";
 import { http } from "@lucid-agents/http";
 import { payments, paymentsFromEnv } from "@lucid-agents/payments";
+import { x402V2Middleware } from "./x402-v2-middleware";
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
@@ -16,6 +17,9 @@ const agent = await createAgent({
   .build();
 
 const { app, addEntrypoint } = await createAgentApp(agent);
+
+// Add x402 v2 response format middleware for x402scan compatibility
+app.use("*", x402V2Middleware());
 
 // ============================================================================
 // LLM HELPER
