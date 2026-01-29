@@ -13,8 +13,7 @@
     "@lucid-agents/core": "latest",
     "@lucid-agents/hono": "latest",
     "@lucid-agents/http": "latest",
-    "@lucid-agents/payments": "latest",
-    "zod": "^4.3.0"
+    "@lucid-agents/payments": "latest"
   },
   "devDependencies": {
     "bun-types": "^1.1.0",
