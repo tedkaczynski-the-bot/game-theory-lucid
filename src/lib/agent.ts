@@ -400,7 +400,7 @@ addEntrypoint({
     context: z.string().optional().describe("Additional context: docs, whitepaper, specific concerns"),
     depth: z.enum(["quick", "thorough", "exhaustive"]).default("thorough"),
   }),
-  price: { amount: "1.00", currency: "USDC" },
+  price: "1.00",
   handler: async (ctx) => {
     const { protocol, context, depth } = ctx.input;
     const prompt = `Analyze the game theory of: ${protocol}\nDepth: ${depth}\n${context ? `Additional context: ${context}` : ""}`;
@@ -429,7 +429,7 @@ addEntrypoint({
     vestingInfo: z.string().optional(),
     context: z.string().optional(),
   }),
-  price: { amount: "1.50", currency: "USDC" },
+  price: "1.50",
   handler: async (ctx) => {
     const { token, supply, distribution, mechanisms, vestingInfo, context } = ctx.input;
     const prompt = `Analyze tokenomics of: ${token}\n${supply ? `Supply: ${JSON.stringify(supply)}` : ""}\n${distribution ? `Distribution: ${JSON.stringify(distribution)}` : ""}\n${mechanisms ? `Mechanisms: ${mechanisms.join(", ")}` : ""}\n${vestingInfo ? `Vesting: ${vestingInfo}` : ""}\n${context ? `Context: ${context}` : ""}`;
@@ -452,7 +452,7 @@ addEntrypoint({
     }).optional(),
     context: z.string().optional(),
   }),
-  price: { amount: "0.75", currency: "USDC" },
+  price: "0.75",
   handler: async (ctx) => {
     const { protocol, governanceType, parameters, context } = ctx.input;
     const prompt = `Analyze governance of: ${protocol}\n${governanceType ? `Type: ${governanceType}` : ""}\n${parameters ? `Parameters: ${JSON.stringify(parameters)}` : ""}\n${context ? `Context: ${context}` : ""}`;
@@ -470,7 +470,7 @@ addEntrypoint({
     contractCode: z.string().optional(),
     context: z.string().optional(),
   }),
-  price: { amount: "0.50", currency: "USDC" },
+  price: "0.50",
   handler: async (ctx) => {
     const { target, transactionType, contractCode, context } = ctx.input;
     const prompt = `Analyze MEV exposure of: ${target}\n${transactionType ? `Transaction type: ${transactionType}` : ""}\n${contractCode ? `Code:\n${contractCode}` : ""}\n${context ? `Context: ${context}` : ""}`;
@@ -490,7 +490,7 @@ addEntrypoint({
     budget: z.string().optional(),
     context: z.string().optional(),
   }),
-  price: { amount: "2.00", currency: "USDC" },
+  price: "2.00",
   handler: async (ctx) => {
     const { objective, constraints, players, existingDesign, budget, context } = ctx.input;
     const prompt = `Design mechanism for: ${objective}\n${constraints ? `Constraints: ${constraints.join(", ")}` : ""}\n${players ? `Players: ${players.join(", ")}` : ""}\n${existingDesign ? `Existing design: ${existingDesign}` : ""}\n${budget ? `Budget: ${budget}` : ""}\n${context ? `Context: ${context}` : ""}`;
