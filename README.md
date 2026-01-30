@@ -80,12 +80,12 @@ For any protocol, the agent asks:
 
 ```bash
 # Required
-OPENROUTER_API_KEY=sk-or-v1-xxx
+OPENROUTER_API_KEY=your_openrouter_api_key
 
 # x402 Payments
 PAYMENTS_NETWORK=base
-PAYMENTS_PAY_TO=0x81FD234f63Dd559d0EDA56d17BB1Bb78f236DB37
-PAYMENTS_ASSET=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
+PAYMENTS_PAY_TO=your_wallet_address
+PAYMENTS_ASSET=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913  # USDC on Base
 PAYMENTS_FACILITATOR_URL=https://x402.org/facilitator
 
 # Server
@@ -103,6 +103,7 @@ PORT=8080
 ## Links
 
 - **Frontend:** https://gametheory.unabotter.xyz
+- **x402scan:** https://www.x402scan.com/server/0f95dc46-e3f8-4869-bbf7-e4247a1e9cfb
 - **Agent Card:** https://gametheory.unabotter.xyz/.well-known/agent-card.json
 - **x402 Discovery:** https://gametheory.unabotter.xyz/.well-known/x402
 - **Builder:** [@unabotter](https://x.com/unabotter)
