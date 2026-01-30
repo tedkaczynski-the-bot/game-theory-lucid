@@ -47,26 +47,27 @@ if (PAYMENTS_RECEIVABLE_ADDRESS) {
   console.log(`[game-theory] Facilitator: ${facilitatorConfig.url}`);
 
   // Payment routes configuration
+  // Note: x402-hono expects network names like "base-sepolia", not CAIP-2 format
   const paymentRoutes = {
     "POST /entrypoints/analyze/invoke": {
       price: "$1.00",
-      network: caip2Network,
+      network: NETWORK,
     },
     "POST /entrypoints/tokenomics/invoke": {
       price: "$1.50",
-      network: caip2Network,
+      network: NETWORK,
     },
     "POST /entrypoints/governance/invoke": {
       price: "$0.75",
-      network: caip2Network,
+      network: NETWORK,
     },
     "POST /entrypoints/mev/invoke": {
       price: "$0.50",
-      network: caip2Network,
+      network: NETWORK,
     },
     "POST /entrypoints/design/invoke": {
       price: "$2.00",
-      network: caip2Network,
+      network: NETWORK,
     },
   };
 
