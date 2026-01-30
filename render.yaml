@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: game-theory-agent
+    runtime: node
+    buildCommand: "curl -fsSL https://bun.sh/install | bash && ~/.bun/bin/bun install"
+    startCommand: "~/.bun/bin/bun run src/index.ts"
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PORT
+        value: 8080
+      - key: AGENT_NAME
+        value: game-theory
+      - key: AGENT_VERSION
+        value: "1.0.0"
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: PAYMENTS_RECEIVABLE_ADDRESS
+        value: "0x81FD234f63Dd559d0EDA56d17BB1Bb78f236DB37"
+      - key: NETWORK
+        value: base
+      - key: FACILITATOR_URL
+        value: "https://x402.org/facilitator"
