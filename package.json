@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
-    "build": "bun build src/index.ts --outdir=dist --target=bun",
+    "build": "echo No build needed - Bun runs TS directly",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
