@@ -2,10 +2,24 @@ import { z } from "zod";
 import { createAgentApp } from "@lucid-agents/hono";
 import { createAgent } from "@lucid-agents/core";
 import { http } from "@lucid-agents/http";
-import { payments, paymentsFromEnv } from "@lucid-agents/payments";
+import { paymentMiddleware } from "x402-hono";
 import { x402V2Middleware } from "./x402-v2-middleware";
+import { getCdpFacilitatorConfig } from "./cdp-auth";
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+const PAYMENTS_RECEIVABLE_ADDRESS = process.env.PAYMENTS_RECEIVABLE_ADDRESS;
+
+// Network configuration - use CAIP-2 format
+const NETWORK = process.env.NETWORK ?? "base";
+const NETWORK_TO_CAIP2: Record<string, string> = {
+  "base": "eip155:8453",
+  "base-sepolia": "eip155:84532",
+};
+const caip2Network = NETWORK_TO_CAIP2[NETWORK] ?? NETWORK;
+
+// ============================================================================
+// AGENT SETUP
+// ============================================================================
 
 const agent = await createAgent({
   name: process.env.AGENT_NAME ?? "game-theory",
@@ -13,13 +27,58 @@ const agent = await createAgent({
   description: "Protocol incentive analysis by Ted. Game theory for crypto: find the exploits before they find you.",
 })
   .use(http())
-  .use(payments({ config: paymentsFromEnv() }))
   .build();
 
 const { app, addEntrypoint } = await createAgentApp(agent);
 
 // Add x402 v2 response format middleware for x402scan compatibility
 app.use("*", x402V2Middleware());
+
+// ============================================================================
+// x402 PAYMENT MIDDLEWARE WITH CDP AUTH
+// ============================================================================
+
+if (PAYMENTS_RECEIVABLE_ADDRESS) {
+  console.log(`[game-theory] Payments enabled on ${NETWORK} (${caip2Network})`);
+  console.log(`[game-theory] Recipient: ${PAYMENTS_RECEIVABLE_ADDRESS}`);
+
+  // Get CDP facilitator config with auth headers
+  const facilitatorConfig = getCdpFacilitatorConfig();
+  console.log(`[game-theory] Facilitator: ${facilitatorConfig.url}`);
+
+  // Payment routes configuration
+  const paymentRoutes = {
+    "POST /entrypoints/analyze/invoke": {
+      price: "$1.00",
+      network: caip2Network,
+    },
+    "POST /entrypoints/tokenomics/invoke": {
+      price: "$1.50",
+      network: caip2Network,
+    },
+    "POST /entrypoints/governance/invoke": {
+      price: "$0.75",
+      network: caip2Network,
+    },
+    "POST /entrypoints/mev/invoke": {
+      price: "$0.50",
+      network: caip2Network,
+    },
+    "POST /entrypoints/design/invoke": {
+      price: "$2.00",
+      network: caip2Network,
+    },
+  };
+
+  // Add x402 payment middleware with CDP auth
+  app.use("*", paymentMiddleware(
+    PAYMENTS_RECEIVABLE_ADDRESS,
+    paymentRoutes,
+    facilitatorConfig
+  ));
+} else {
+  console.warn("[game-theory] PAYMENTS_RECEIVABLE_ADDRESS not set - payments disabled");
+}
 
 // ============================================================================
 // LLM HELPER
