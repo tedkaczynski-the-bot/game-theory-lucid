@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v4";
 import { createAgentApp } from "@lucid-agents/hono";
 import { createAgent } from "@lucid-agents/core";
 import { http } from "@lucid-agents/http";
